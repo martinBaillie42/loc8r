@@ -34,12 +34,12 @@ Vagrant.configure(2) do |config|
     . ~/.nvm/nvm.sh
     nvm install v6.2.2
 
-    npm install -g express-generator
+    npm install -g express-generator nodemon
 
     mkdir /home/vagrant/node_modules
 
-    # rm -rf /vagrant/node_modules
-    # ln -sf /home/vagrant/node_modules /vagrant/
+    rm -rf /vagrant/node_modules
+    ln -sf /home/vagrant/node_modules /vagrant/
     # npm install -g browser-sync gulp-cli
 
   SHELL
