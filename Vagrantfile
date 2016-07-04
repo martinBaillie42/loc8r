@@ -26,6 +26,7 @@ Vagrant.configure(2) do |config|
 
     mv ~/.sshtmp/* ~/.ssh/
     rm -rf ~/.sshtmp
+    chmod 400 ~/.ssh/id_rsa
     sudo apt-get update
     sudo apt-get install -y git 
 
