@@ -30,6 +30,7 @@ Vagrant.configure(2) do |config|
     chmod 400 ~/.ssh/id_rsa
     sudo apt-get update
     sudo apt-get install -y git
+    # add git ssh identity
 
     # install nvm
     wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.31.2/install.sh | bash
