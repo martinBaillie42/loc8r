@@ -24,35 +24,45 @@ Vagrant.configure(2) do |config|
 
   config.vm.provision "shell", privileged: false, inline: <<-SHELL
 
-    # install git
+    ## install shh
     mv ~/.sshtmp/* ~/.ssh/
     rm -rf ~/.sshtmp
     chmod 400 ~/.ssh/id_rsa
+
+    ## install git
     sudo apt-get update
     sudo apt-get install -y git
-    # add git ssh identity
+    git config --global user.email "martin@martinbaillie.net"
+    git config --global user.name "martinBaillie42"
+    git config --global push.default simple
 
-    # install nvm
+    ## install nvm
     wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.31.2/install.sh | bash
     . ~/.nvm/nvm.sh
     nvm install v6.2.2
 
-    # install node globals
+    ## install node globals
     npm install -g express-generator nodemon
+    # npm install -g browser-sync gulp-cli
 
-    # setup node_modules symlink
+    ## setup node_modules symlink
     mkdir /home/vagrant/node_modules
     rm -rf /vagrant/node_modules
     ln -sf /home/vagrant/node_modules /vagrant/
 
-    # npm install -g browser-sync gulp-cli
+    ## install local npm packages
+    (cd /vagrant/; npm install)
 
-    # install mongo
+    ## install mongo
     sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
     echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
     sudo apt-get update
     sudo apt-get install -y mongodb-org
     # sudo service mongod start
+
+    ## User has to enter these within the vagrant box:
+    ## eval $(ssh-agent -s)
+    ## ssh-add ~/.ssh/id_rsa
 
   SHELL
 
