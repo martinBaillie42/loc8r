@@ -24,23 +24,34 @@ Vagrant.configure(2) do |config|
 
   config.vm.provision "shell", privileged: false, inline: <<-SHELL
 
+    # install git
     mv ~/.sshtmp/* ~/.ssh/
     rm -rf ~/.sshtmp
     chmod 400 ~/.ssh/id_rsa
     sudo apt-get update
-    sudo apt-get install -y git 
+    sudo apt-get install -y git
 
+    # install nvm
     wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.31.2/install.sh | bash
     . ~/.nvm/nvm.sh
     nvm install v6.2.2
 
+    # install node globals
     npm install -g express-generator nodemon
 
+    # setup node_modules symlink
     mkdir /home/vagrant/node_modules
-
     rm -rf /vagrant/node_modules
     ln -sf /home/vagrant/node_modules /vagrant/
+
     # npm install -g browser-sync gulp-cli
+
+    # install mongo
+    sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
+    echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
+    sudo apt-get update
+    sudo apt-get install -y mongodb-org
+    # sudo service mongod start
 
   SHELL
 
