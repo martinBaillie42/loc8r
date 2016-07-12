@@ -40,6 +40,8 @@ process.on('SIGINT', function () {
 // Listen for SIGTERM emitted when Heroku shuts down process
 process.on('SIGTERM', function () {
     gracefulShutdown('Heroku app shutdown', function () {
-        process.exit(0);    
+        process.exit(0);
     });
 });
+
+require('./locations');
